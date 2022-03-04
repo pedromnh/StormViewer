@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UITableViewController {
     var pictures = [String]()
-    
+    var amountOfPics = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,9 +25,11 @@ class ViewController: UITableViewController {
         for item in items {
             if item.hasPrefix("nssl") {
                 pictures.append(item)
+                amountOfPics += 1
             }
         }
         
+        pictures.sort()
         print(pictures)
     }
 
@@ -46,6 +48,8 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
             vc.selectedImage = pictures[indexPath.row]
+            vc.indexOfSelectedImage = indexPath.row + 1
+            vc.amountOfPics = amountOfPics
             navigationController?.pushViewController(vc, animated: true)
         }
     }
